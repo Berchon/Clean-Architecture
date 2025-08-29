@@ -18,7 +18,7 @@ Inclua um `README.md` com os passos a serem executados no desafio e a porta em q
 
 1. Rode no terminal o seguinte comando  
     ```bash
-    $ XXXXX
+    $ git clone git@github.com:Berchon/Clean-Architecture.git
     ```
 
 ## Como executar a aplicação
@@ -34,7 +34,8 @@ Inclua um `README.md` com os passos a serem executados no desafio e a porta em q
 
 2. Levantar os servidores  
     ```bash
-    $ go run cmd/ordersystem/main.go wire_gen.go
+    $ cd cmd/ordersystem/
+    $ go run main.go wire_gen.go
     ```
 - O servidor REST roda na porta `8000`
 - O servidor GraphQL roda na porta `8080`
@@ -55,12 +56,12 @@ Inclua um `README.md` com os passos a serem executados no desafio e a porta em q
     2.1. Para criar uma nova `order`:
     ```protobuf
     pb.OrderService@127.0.0.1:50051> call CreateOrder
-    id (TYPE_STRING) => ccc
+    id (TYPE_STRING) => id-2
     price (TYPE_FLOAT) => 10
     tax (TYPE_FLOAT) => 1
     {
       "finalPrice": 11,
-      "id": "ccc",
+      "id": "id-2",
       "price": 10,
       "tax": 1
     }
@@ -96,7 +97,7 @@ Inclua um `README.md` com os passos a serem executados no desafio e a porta em q
     3.2. Para criar uma `Order` utilize a `mutation createOrder` abaixo
     ```properties
     mutation createOrder {
-      createOrder(input:{id: "dddd", Price: 12.2, Tax: 2.0}) {
+      createOrder(input:{id: "id-3", Price: 12.2, Tax: 2.0}) {
         id
         Price
         Tax
@@ -137,7 +138,7 @@ Inclua um `README.md` com os passos a serem executados no desafio e a porta em q
 
 Executar o comando `bash` dentro do container de serviço `MySQL`.
 ```bash
-$ docker-colocalhost:8080mpose exec mysql bash
+$ docker-compose exec mysql bash
 ```
 Entrar no CLI do MySQL (senha root)
 ```bash
@@ -156,7 +157,7 @@ Para visualizar as tabelas da base de dados `orders`
 mysql> show tables;
 ```
 Caso não exista nenhuma tabela, pode-se criar a tabela usada na aplicação com o comando abaixo. **OBS.: Ao rodar o main.go a aplicação se encaregará de criar a tabela**
-```bash
+```sql
 mysql>  CREATE TABLE IF NOT EXISTS orders (
           id varchar(255) NOT NULL, 
           price float NOT NULL, 
@@ -168,7 +169,7 @@ mysql>  CREATE TABLE IF NOT EXISTS orders (
 ## Como gerar o wire inject
 ```bash
   $ cd cmd/ordersystem
-  $ cmd/ordersystem $ wire
+  $ wire
 ```
 
 ## Como gerar os arquivos do Protol Buffers para o GRPC
